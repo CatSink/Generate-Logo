@@ -11,4 +11,6 @@ getText(message, color)
  if (message.length > 3) {
     Error('Please enter 3 characters or less')
  }
- this.textSelector = `<text x='150' y='130' font-size='50' text-anchor='middle' fill=${color}>${message}</text>`;
+ this.message = `<text x='150' y='130' font-size='50' text-anchor='middle' fill=${color}>${message}</text>`;
+
+ module.exports = Logo;
