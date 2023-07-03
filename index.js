@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const generateSvg = require('./lib/SVG.js');
 const {Triangle, Rectangle, Circle} = require('./lib/shapes.js');
-
+//color keywords correspond to hexidecimal values
 const ColorKeyWords = [
     { name: "black", value: "#000000"},
     { name: "white", value: "#FFFFFF"},
@@ -15,9 +15,7 @@ const ColorKeyWords = [
     { name: "violet", value: "#ee82ee"},
     { name: "custom", value: "custom"}
 ]
-
-// Array of questions for user input
-// text - max three characters, text color keyword or hex #, shape(list) - circle, triangle, square, shape color keyword or hex #
+//inquirer prompts for user input
 const questions = [
     {
         type: 'input',
@@ -47,7 +45,6 @@ const questions = [
         message: 'Please enter your custom hexidecimal color.',
         name: 'textHex',
         when: (answers) => { return answers.textColor === "custom" },
-        // Uses regular expression to check if the hex code is a valid hexidecimal color
         validate: function (input) {
             const hex = /^#[0-9a-f]{6}$/ig
             if (input.match(hex) === null) {
@@ -55,7 +52,7 @@ const questions = [
             }
             return true;
         }
-    },
+    }, //Regex for color/hexadecimal numbers 
     {
         type: 'list',
         message: 'Please select a shape for your SVG file.',
@@ -74,7 +71,6 @@ const questions = [
         message: 'Please enter your custom hexidecimal color.',
         name: 'shapeHex',
         when: (answers) => { return answers.shapeColor === "custom" },
-        // Uses regular expression to check if the hex code is a valid hexidecimal color
         validate: function (input) {
             const hex = /^#[0-9a-f]{6}$/ig
             if (input.match(hex) === null) {
@@ -94,9 +90,8 @@ function writeToFile(fileName,data) {
 
 function init() {
     inquirer.prompt(questions).then((data) => {
-    // console.log(data)
     let newShape
-    // if user selected custom color then use the custom hex value as data.shapeColor
+
     if (data.shapeColor === 'custom') {
         data.shapeColor = data.shapeHex
     }
@@ -107,7 +102,7 @@ function init() {
     } else {
         newShape = new Triangle(data.shapeColor)
     }
-    // console.log(newShape)
+
     const logoShape = newShape.render()
     const svg = generateSvg(logoShape, data.text, data.textColor, data.textHex, data.shapeHex);
     writeToFile('Logo.svg', svg);
