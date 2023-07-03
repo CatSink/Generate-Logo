@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generateSvg = require('./lib/SVG.js');
-const {Triangle, Rectangle, Circle} = require('./lib/shapes.js');
+const {Triangle, Rectangle, Circle, Square} = require('./lib/shapes.js');
 //color keywords correspond to hexidecimal values
 const ColorKeyWords = [
     { name: "black", value: "#000000"},
@@ -96,7 +96,7 @@ function init() {
         data.shapeColor = data.shapeHex
     }
     if (data.shape === 'square') {
-        newShape = new Rectangle(data.shapeColor)
+        newShape = new Square(data.shapeColor)
     } else if (data.shape === 'circle') {
         newShape = new Circle(data.shapeColor)
     } else {
